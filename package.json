@@ -1,0 +1,26 @@
+{
+  "devDependencies": {
+    "@hotwired/stimulus": "^3.0.0",
+    "@symfony/stimulus-bridge": "^3.2.0",
+    "@symfony/webpack-encore": "^3.0.0",
+    "core-js": "^3.23.0",
+    "regenerator-runtime": "^0.13.9",
+    "webpack-notifier": "^1.15.0"
+  },
+  "license": "UNLICENSED",
+  "private": true,
+  "scripts": {
+    "dev-server": "encore dev-server",
+    "dev": "encore dev",
+    "watch": "encore dev --watch",
+    "build": "encore production --progress"
+  },
+  "name": "sulu.lo",
+  "description": "<br/> <p align=\"center\">     <a href=\"https://sulu.io/\" target=\"_blank\">         <img width=\"50%\" src=\"https://sulu.io/website/images/sulu.svg\" alt=\"Sulu logo\">     </a> </p>",
+  "version": "1.0.0",
+  "main": "webpack.config.js",
+  "directories": {
+    "test": "tests"
+  },
+  "author": ""
+}
