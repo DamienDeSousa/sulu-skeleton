@@ -2,6 +2,9 @@ MAKE=make
 
 SHELL := /bin/bash
 
+DOCKER_COMPOSE := docker-compose
+DOCKER_SERVER := $(DOCKER_COMPOSE) exec server
+
 CURRENT_UID := $(shell id -u)
 CURRENT_GID := $(shell id -g)
 CURRENT_PWD := $(shell pwd)
@@ -11,13 +14,30 @@ help:
 
 fix-permission: ## fix permission on project files
 	sudo chown ${CURRENT_UID}:${CURRENT_GID} -R .
-	docker-compose exec server chown www-data:www-data -R public/uploads
+	$(DOCKER_SERVER) chown www-data:www-data -R var
 
 npm-install: ## npm install
-	docker-compose exec server npm install
+	$(DOCKER_SERVER) npm install
 
 npm-build: ## npm run build
-	docker-compose exec server npm run build
+	$(DOCKER_SERVER) npm run build
 
-npm-init:
-	docker-compose exec server npm init
+npm-init: ## init npm
+	$(DOCKER_SERVER) npm init
+
+up: ## up docker stack
+	$(DOCKER_COMPOSE) up -d --build
+
+down: ## down docker stack
+	$(DOCKER_COMPOSE) down
+
+build-admin-assets: ## build admin assets
+	$(DOCKER_SERVER) php bin/console sulu:admin:update-build
+
+build-website-assets:
+	$(MAKE) npm-install
+	$(MAKE) npm-build
+
+build-assets: ## build all assets
+	$(MAKE) build-admin-assets
+	$(MAKE) build-website-assets

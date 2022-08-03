@@ -16,16 +16,15 @@ RUN apt-get update -qq && \
     gnupg \
     unzip \
     zip \
+    libzip-dev \
     imagemagick \
     libmagickwand-dev
 
 RUN pecl install imagick && docker-php-ext-enable imagick
 
-RUN docker-php-ext-install opcache pdo_mysql gd intl
+RUN docker-php-ext-install opcache pdo_mysql gd intl zip
 # Apache
 COPY my-httpd.conf /etc/apache2/sites-available/000-default.conf
-
-COPY php.ini $PHP_INI_DIR/conf.d/
 
 RUN a2enmod rewrite
 
